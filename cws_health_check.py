@@ -1,11 +1,10 @@
 # SASE CWS Health Check
 import json
-
 import requests
 import urllib3
 import argparse
 from tabulate import tabulate
-from termcolor import colored
+
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 requests.packages.urllib3.disable_warnings()
@@ -33,31 +32,18 @@ def cws_health_check(vco_url):
     print(OKCYAN + "VCO URL: {}".format(vco_url) + ENDC)
     try:
         response = requests.get(cws_health_check_api_path)
-        if response.status_code == 200:
-
-            data = json.loads(response.text)
-            table.append(["CWS Service Status", data["status"]])
-            table.append(
-                ["VNI Response Time", data["checks"]["vni:responseTime"]["status"]]
-            )
-            table.append(
-                ["CWS DB Connection", data["checks"]["database:connection"]["status"]]
-            )
-            table.append(
-                [
-                    "CWS Manager Service",
-                    data["checks"]["cwsManager:responseTime"]["status"],
-                ]
-            )
-            formatted_table = [
-                [colored(key, attrs=["bold"]), colored(str(value), "green")]
-                for key, value in table
-            ]
-            print(tabulate(formatted_table, tablefmt="fancy_grid", numalign="center"))
-
+        if response.status_code == 200 or response.status_code == 500:
+            try:
+                data = json.loads(response.text)
+                table.append(["CWS Service Status", data["status"]])
+                table.append(["VNI Response Time", data["checks"]["vni:responseTime"]["status"]])
+                table.append(["CWS DB Connection", data["checks"]["database:connection"]["status"]])
+                table.append(["CWS Manager Service", data["checks"]["cwsManager:responseTime"]["status"]])
+                print(tabulate(table, tablefmt="fancy_grid", numalign="center"))
+            except Exception as e:
+                print(WARNING + f"An exception occurred: {type(e).__name__}" + ENDC)
         else:
-            print(response.text)
-            print(WARNING + "\tUnable to reach VCO" + ENDC)
+            print(WARNING + "\tUnable to contact VCO" + ENDC)
 
     except Exception as e:
         print(WARNING + f"An exception occurred: {type(e).__name__}" + ENDC)
