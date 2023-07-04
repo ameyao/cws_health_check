@@ -20,8 +20,8 @@ ENDC = "\033[0m"
 BOLD = "\033[1m"
 UNDERLINE = "\033[4m"
 
-token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlblV1aWQiOiJkNmJlODdjYi02MTVmLTQyZmMtOGZkNy0yYzYxOTBkZTNiZWUiLCJleHAiOjE3MTk5NjcwNjksInV1aWQiOiJhYTU4MjRkZC0yMzliLTExZTktOGI2Zi0wMmJhYzY0MmNiZDgiLCJpYXQiOjE2ODg0MzEwNzF9.XvXqjNn0O3UXMs9jgy61Xv2ltJLb_45rzk_SgTd7bFI"
-vco_url = "vco301-syd1.velocloud.net"
+token = "Specify the API Token here"
+vco_url = "Specify VCO URL here"
 
 keys = [
     "CWS Service Status",
