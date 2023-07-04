@@ -1,4 +1,4 @@
-# SASE CWS Health Check
+#!/usr/bin/env python3
 import json
 import requests
 import urllib3
