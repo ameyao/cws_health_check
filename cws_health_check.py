@@ -1,4 +1,4 @@
-# SASE CWS Health Check
+#!/usr/bin/env python3
 import json
 import requests
 import urllib3
@@ -35,6 +35,7 @@ def cws_health_check(vco_url):
         if response.status_code == 200 or response.status_code == 500:
             try:
                 data = json.loads(response.text)
+                print(OKCYAN + "CWS Version: {}".format(data["version"]) + ENDC)
                 table.append(["CWS Service Status", data["status"]])
                 table.append(["VNI Response Time", data["checks"]["vni:responseTime"]["status"]])
                 table.append(["CWS DB Connection", data["checks"]["database:connection"]["status"]])
